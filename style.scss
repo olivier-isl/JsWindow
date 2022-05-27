@@ -1,0 +1,83 @@
+body {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	-webkit-user-drag : none;
+	
+	.window{
+		position: absolute;
+		border-radius: 8px;
+		box-shadow: 0 0 30px -10px rgba(0,0,0,0.2);
+		overflow: hidden;
+		transition : width 0.1s 0s linear, height 0.1s 0s linear;
+		.header {
+			width: 100%;
+			height: 42px;
+			background-color: #f0f0f0;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			-webkit-user-drag : element;
+			.left {
+				padding-left: 15px;
+			}
+			.right {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+				span {
+					width:42px;
+					height: 42px;
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					&:hover{
+						background-color: #e7e7e7;
+						&.close {
+							background-color: red;
+						}
+					}
+				}
+			}
+		}
+		.body {
+			width: 100%;
+			height: calc(100% - 42px - 32px);
+			background: red;
+		}
+		.footer {
+			width: 100%;
+			height: 32px;
+			background: #f0f0f0;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			.expand {
+				width: 32px;
+				height: 32px;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		&-clone {
+			pointer-events: none;
+			@extend .window;
+		}
+	}
+	.animated {
+		transition: all 0.1s 0s ease-in-out;
+	}
+}

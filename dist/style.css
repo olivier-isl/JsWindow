@@ -1,0 +1,81 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-user-drag: none;
+}
+body .window, body .window-clone {
+  position: absolute;
+  border-radius: 8px;
+  box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: width 0.1s 0s linear, height 0.1s 0s linear;
+}
+body .window .header, body .window-clone .header {
+  width: 100%;
+  height: 42px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-user-drag: element;
+}
+body .window .header .left, body .window-clone .header .left {
+  padding-left: 15px;
+}
+body .window .header .right, body .window-clone .header .right {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+body .window .header .right span, body .window-clone .header .right span {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+body .window .header .right span:hover, body .window-clone .header .right span:hover {
+  background-color: #e7e7e7;
+}
+body .window .header .right span:hover.close, body .window-clone .header .right span:hover.close {
+  background-color: red;
+}
+body .window .body, body .window-clone .body {
+  width: 100%;
+  height: calc(100% - 42px - 32px);
+  background: red;
+}
+body .window .footer, body .window-clone .footer {
+  width: 100%;
+  height: 32px;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+body .window .footer .expand, body .window-clone .footer .expand {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+body .window-clone {
+  pointer-events: none;
+}
+body .animated {
+  transition: all 0.1s 0s ease-in-out;
+}
