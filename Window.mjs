@@ -61,7 +61,7 @@ class EventWindow {
 	dbclick() {
 		let clickCount = 0
 		let singleClickTimer = null;
-		this.dom.querySelector('.header').addEventListener('click',() => {
+		this.dom.querySelector('.header').onclick = () => {
 			clickCount++;
 			if(clickCount === 1) {
 				singleClickTimer = setTimeout(() => {
@@ -72,11 +72,11 @@ class EventWindow {
 				clearTimeout(singleClickTimer);
 				this.wideEvent()
 			}
-		})
+		}
 	}
 	
 	reduce() {
-		this.dom.querySelector('.reduce').click(() => {
+		this.dom.querySelector('.reduce').onclick = () => {
 			this.dom.classList.add('animated')
 			if(this.height > 42) {
 				this.style.set({
@@ -97,7 +97,7 @@ class EventWindow {
 			setTimeout(() => {
 				this.dom.classList.remove('animated')
 			}, 100)
-		})
+		}
 	}
 
 	wideEvent() {
@@ -129,9 +129,9 @@ class EventWindow {
 	}
 
 	wide() {
-		this.dom.querySelector('.wide').click(() => {
+		this.dom.querySelector('.wide').onclick = () => {
 			this.wideEvent()
-		})
+		}
 	}
 
 	remove() {
