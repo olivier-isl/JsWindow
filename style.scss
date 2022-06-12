@@ -1,20 +1,21 @@
+$size : 56px; //42px
 body {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	-webkit-user-drag : none;
 	
 	.window{
 		position: absolute;
-		border-radius: 8px;
+		//border-radius: 8px;
 		box-shadow: 0 0 30px -10px rgba(0,0,0,0.2);
 		overflow: hidden;
 		transition : width 0.1s 0s linear, height 0.1s 0s linear;
+		resize: both;
 		.header {
 			width: 100%;
-			height: 42px;
+			height: $size ;
 			background-color: #f0f0f0;
 			display: flex;
 			flex-direction: row;
@@ -31,8 +32,8 @@ body {
 				flex-wrap: wrap;
 				align-items: center;
 				span {
-					width:42px;
-					height: 42px;
+					width:$size;
+					height: $size;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
@@ -50,8 +51,9 @@ body {
 		}
 		.body {
 			width: 100%;
-			height: calc(100% - 42px - 32px);
-			background: red;
+			height: calc(100% - #{$size} - 32px);
+			background: white;
+			overflow: auto;
 		}
 		.footer {
 			width: 100%;

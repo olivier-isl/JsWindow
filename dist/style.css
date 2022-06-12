@@ -4,18 +4,17 @@ body {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  -webkit-user-drag: none;
 }
 body .window, body .window-clone {
   position: absolute;
-  border-radius: 8px;
   box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   transition: width 0.1s 0s linear, height 0.1s 0s linear;
+  resize: both;
 }
 body .window .header, body .window-clone .header {
   width: 100%;
-  height: 42px;
+  height: 56px;
   background-color: #f0f0f0;
   display: flex;
   flex-direction: row;
@@ -34,8 +33,8 @@ body .window .header .right, body .window-clone .header .right {
   align-items: center;
 }
 body .window .header .right span, body .window-clone .header .right span {
-  width: 42px;
-  height: 42px;
+  width: 56px;
+  height: 56px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -51,8 +50,9 @@ body .window .header .right span:hover.close, body .window-clone .header .right 
 }
 body .window .body, body .window-clone .body {
   width: 100%;
-  height: calc(100% - 42px - 32px);
-  background: red;
+  height: calc(100% - 56px - 32px);
+  background: white;
+  overflow: auto;
 }
 body .window .footer, body .window-clone .footer {
   width: 100%;

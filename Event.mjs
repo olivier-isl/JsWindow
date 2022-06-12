@@ -40,4 +40,4 @@ const Event = {
 		this.addEventListener('mouseup', cb, false)
 	},
 }
-export default Object.assign(HTMLElement.prototype, Event)
+export default [Object.assign(HTMLElement.prototype, Event), Object.assign(NodeList.prototype, Event)]
