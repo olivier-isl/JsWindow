@@ -1,4 +1,29 @@
-class EventWindow {
+const Event = {
+	addStyle(obj) {
+		Object.keys(obj).forEach(el => {
+			this.style.setProperty(el, obj[el], '')
+		})
+	},
+	removeStyle(arr) {
+				arr.forEach(el => {
+			this.style.removeProperty(el)
+		})
+	},
+	attr() {
+		return {
+			title: (() => {
+				console.log(this.getAttribute('attr-title'))
+			})()
+		}
+	},
+	createWindow(opts) {
+		EventWindow.getInstance(this, opts)
+	}
+}
+Object.assign(HTMLElement.prototype, Event);
+Object.assign(NodeList.prototype, Event);
+
+export class EventWindow {
 	modules = [];
 	name;
 	isWided = false;
@@ -7,11 +32,11 @@ class EventWindow {
 	height		= 600;
 	x			= window.innerWidth/2- this.width/2;
 	y			= window.innerHeight/2-this.height/2;
-	z			= 0;
 	left = 0;
 	top = 0;
 	zIndex;
 	oldzIndex = this.zIndex;
+	content;
 
 	oldX 		= this.x
 	oldY 		= this.y
@@ -20,16 +45,23 @@ class EventWindow {
 	oldLeft = this.left;
 	oldTop = this.top;
 
-	constructor(dom, _index) {
-		const sep = _index*40
+	constructor(dom, _opts = null) {
+		var currentDrag = null;
+		var currentZindex = 100
+		this.opts = _opts
+		const sep = 40
 		this.name = dom.dataset.obj
 		this.isWided = false;
 		this.dom = dom;
+		this.content = dom.innerHTML
+		this.createWindow()
+		
 		this.isExpanded = false
 		this.style.set({
 			x : this.oldX+=sep,
 			y : this.oldY+=sep
 		})
+
 		this.transform = this.Transform().get()
 		this.dom.addStyle(this.style.get())
 		this.close()
@@ -41,13 +73,53 @@ class EventWindow {
 		this.resize()
 	}
 
-	resize() {
-		const scope = this
-		function mod() {
-			scope.width = scope.dom.style.width
-			scope.height = scope.dom.style.height
+	createWindow() {
+		if(!this.dom.classList.contains('window')){
+			this.dom.classList.add('window')
 		}
-		
+		this.createBody();
+		this.createHeader("lorem ipsum");
+		this.createFooter();
+	}
+
+	createHeader(_title = "test", window = this.dom) {
+		const header = `<div class="header">
+		<div class="left">${_title}</div>
+		<div class="right">
+			<span class="reduce">
+				<i class="fa-solid fa-grip-lines"></i>
+			</span>
+			<span class="wide">
+				<i class="fa-solid fa-expand"></i>
+			</span>
+			<span class="close">
+				<i class="fa-solid fa-xmark"></i>
+			</span>
+		</div>
+	</div>`;
+		window.insertAdjacentHTML('afterbegin', header)
+	}
+	createBody(window = this.dom) {
+		const body = document.createElement('div')
+		body.classList.add('body');
+		body.innerHTML = this.getContent()
+		window.appendChild(body);
+	}
+	getContent() {
+		const content = ""+this.content
+		this.dom.innerHTML = "";
+		return content;
+	}
+	createFooter(window = this.dom) {
+		window.insertAdjacentHTML('beforeend', '<div class="footer"></div>')
+	}
+
+	resize() {
+		// const scope = this
+		const mod = () => {
+			this.width = this.dom.style.width.slice(0, -2)
+			this.height = this.dom.style.height.slice(0, -2)
+		}
 		mod()
 		new ResizeObserver(mod).observe(this.dom)
 	}
@@ -93,10 +165,9 @@ class EventWindow {
 					height : this.oldHeight
 				})
 			}
-			this.render()
 			setTimeout(() => {
 				this.dom.classList.remove('animated')
-			}, 100)
+			},100)
 		}
 	}
 
@@ -161,12 +232,11 @@ class EventWindow {
 	Transform() {
 		return {
 			get: () => { 
-				return `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`
+				return `translate3d(${this.x}px, ${this.y}px, 0px)`
 			},
-			set: (x,y,z) => {
+			set: (x,y) => {
 				this.x = x
 				this.y = y
-				this.z = z
 
 				this.oldX = x
 				this.oldY = y
@@ -235,26 +305,25 @@ class EventWindow {
 			item.style.set({zIndex: 8})
 			item.render()
 		})
-		console.log(window.currentDrag)
 		if(window.currentDrag) {
 			this.style.set({zIndex: window.currentZindex-1})
 			this.render()
 		}
 		window.currentDrag = this.dom
 		this.style.set({zIndex : window.currentZindex})
-		console.log(window.currentDrag)
 	}
 
 	render() {
 		this.dom.addStyle(this.style.get())
 	}
 
-	static getInstance(dom, _i) {
-		EventWindow.instance[dom.dataset.obj] = new EventWindow(dom, _i);
+	static getInstance(dom, opts = null) {
+		EventWindow.instance[dom.dataset.obj] = new EventWindow(dom, opts);
 		return EventWindow.instance[dom.dataset.obj];
-	  }
+	}
 }
 
 EventWindow.instance = [];
 
-export default EventWindow
+
+

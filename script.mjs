@@ -1,11 +1,6 @@
-import * as _Event from './Event.mjs'
-import EventWindow from './Window.mjs'
-
+import {EventWindow} from './Class/Window.mjs'
 
 // Create obj
-document.querySelectorAll('[data-obj]').forEach((dom, _i) => {
-	EventWindow.getInstance(dom, _i)
+document.querySelectorAll('[window]').forEach((dom, _i) => {
+	dom.createWindow()
 })
-
-window.currentDrag = null;
-window.currentZindex = 100
